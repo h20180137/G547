@@ -9,6 +9,7 @@
 #include<linux/device.h>
 #include <linux/types.h>
 #include <linux/random.h>
+#include<linux/errno.h>
 #include <linux/uaccess.h>
 static dev_t accel;
 static struct cdev adxl_x;
@@ -21,6 +22,11 @@ uint16_t getrand(void){
 	uint16_t retval;
 	get_random_bytes(&retval, 2);
 	return retval;
+}
+static int perm_uevent(struct device* dev,struct kobj_uevent_env* env)
+{
+  add_uevent_var(env,"DEVMODE=%#o",0666);
+  return 0;
 }
 static int x_open(struct inode *i,struct file *f)
 {
@@ -120,6 +126,7 @@ static __init int demo_init(void)
 			unregister_chrdev_region(accel,3);
 			return -1;
 		}
+	cls->dev_uevent=perm_uevent;
 	cdev_init(&adxl_x,&xops);
 	device_create(cls,NULL,x,NULL,"adxl_x");
 	if(cdev_add(&adxl_x,x,1)<0)

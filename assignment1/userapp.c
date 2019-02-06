@@ -14,7 +14,7 @@ int main()
   int fd,n;
   uint16_t lol;
 do{
-  printf("\nEnter which axis data do you want\n1 for xaxis \n2 for yaxis \n3 for zaxis\nPress 9 to exit\n");
+  printf("\nEnter which axis data do you want\n1 for xaxis \n2 for yaxis \n3 for zaxis\n4 for all axes\nPress 9 to exit\n");
   
   scanf("%d",&n);
   
@@ -60,6 +60,42 @@ do{
   read(fd,&lol,2);
   printf("accelerometer :\nZ axis value is %d\n",lol);
   }
+else if(n==4)
+{
+fd=open(adxl_x, O_RDWR);//OPEN FOR READING AND WRITING for read only use O_RDONLY
+  
+  if(fd  == -1)
+  {
+  
+    printf("file %s does not exit or locked by another process\n",adxl_x);
+    exit(-1);
+  }
+  
+  read(fd,&lol,2);
+  printf("accelerometer :\nX axis value is %d\n",lol);
+fd=open(adxl_y , O_RDWR);//OPEN FOR READING AND WRITING for read only use O_RDONLY
+  
+  if(fd  == -1)
+  {
+  
+    printf("file %s does not exit or locked by another process\n",adxl_y);
+    exit(-1);
+  }
+  
+  read(fd,&lol,2);
+  printf("Y axis value is %d\n",lol);
+fd=open(adxl_z, O_RDWR);//OPEN FOR READING AND WRITING for read only use O_RDONLY
+  
+  if(fd  == -1)
+  {
+  
+    printf("file %s does not exit or locked by another process\n",adxl_z);
+    exit(-1);
+  }
+  
+  read(fd,&lol,2);
+  printf("Z axis value is %d\n",lol);
+}
 else if(n==9)
 printf("Thank You\n");
 else

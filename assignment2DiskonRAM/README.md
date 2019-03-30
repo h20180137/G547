@@ -1,7 +1,7 @@
 Block Device Driver(Disk on RAM)
 
 
->Download the main.c partition.h and Makefile
+>Download the main.c and Makefile
 
 >Go to the place where code is downloaded and give the command $ make all
 
@@ -26,4 +26,4 @@ to read back from the disk on command line use command xxd /dev/dof | less
 >remove the module using sudo rmmod main.ko
 
 
-If there is an issue removing module close terminal and again open terminal and then remove.
+>If there is an issue removing module close terminal and again open terminal and then remove.
